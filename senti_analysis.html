@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Parth's Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	
+	<body class="is-preload">
+
+		<!-- Header 
+			<header id="header">
+				<a href="index.html" class="title">Parth's Portfolio</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+					</ul>
+				</nav>
+			</header>
+		-->
+
+		<!-- Sidebar -->
+			<section id="sidebar">
+				<div class="inner">
+					<nav>
+						<ul>
+							<li><a href="#intro">Intro</a></li>
+							<li><a href="#one">Methodology</a></li>
+							<li><a href="#two">Results and Conclusion</a></li>
+							<li><a href="index.html">Home</a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- intro project -->
+					<section id="intro" class="wrapper alt fullscreen fade-up">
+						<div class="inner">
+							<section>
+							<h2 class="major">Sentiment Analysis of Vaccination Related Tweets and Relationship to Social Bots</h2>
+							<span class="image fit"><img src="images/botnet.png" alt="" /></span>
+							<p>Social bots are increasingly used to manipulate public opinion from politics to healthcare. These bots are used to spread miss information and fake news; create confusion regarding what is right and wrong; spread fears and distrust about authorities.<br/>
+							In this project, I attempted to find out whether the bots engage differently based on the sentiment of vaccination related tweets. This will help deriving guidelines on how not to attract bots while using Twitter.</p>
+							</section>
+						</div>
+					</section>
+				<!-- intro project end -->
+
+
+				<!-- project methodology -->
+					<section id="one" class="wrapper style1-alt fade-up">
+						
+						<div class="inner">
+						<section>
+						
+						<h3>Methodology</h3>
+							<h4>1. Fetching Tweets</h4>
+							<p><span class="image fit"><img src="images/hashtagplot.png" alt="" /></span>
+							
+							Twitter API was used to collect the most recent vaccination related tweets, from 8th to 15th August 2021, using relevant hashtags. <a href="https://osome.iu.edu/tools/covaxxy">CoVaxxy web dashboard</a> developed by Verna, 2021 was used to loosely identify pro and anti vaccination tweets. #getvaccinated was used to fetch tweets leaning pro vaccination. #vaccineinjury, #vaccinesideeffects, #vaccineskill, #nomandatoryvaccine, #covidvaccinescam,  #leaveourkidsalone, #notovaccinepassports, #mybodymychoice - hashtags were used to fetch tweets leaning anti vaccination. Around 2500 tweets were collected from either of spectrums.</p>
+
+							<h4>2. Cleaning and Preparing Tweets for Clustering</h4>
+							<p><span class="image fit"><img src="images/tweetcleaning.jpg" alt="" /></span>
+							Original tweet had urls, user mentions, hashtags, emojis, special characters, mixed letters. All these were removed to reduce complexity and tweet was converted into tidy text. To further reduce complexity, short words and stop words were also removed. At the end text was converted into group of words, called bag of words. This text is further standardized by lemmatization and stemming.</p>
+
+							<h4>3. Clustering for Sentiment Analysis</h4>
+							<p>Two types of clustering algorithms were used to divide tweets into different sentiments, NMF - Non negative Matrix Factorization and LDA Latent Dirichlet Allocation with the help of sklearn and gensim packages for python. Tweet tokens were vectorized in order to apply clustering. Term Frequency - TF was to feed to LDA algorithm v/s term frequency - inverse document frequency vectorizations - TF-IDF was feed to NMF algorithm.</p>
+
+							<h4>NMF Clustering</h4>
+
+							<span class = "image fit"><img src="images/nmf1.jpg" alt="" /></span>
+
+							<p>Topics were divided into pro, anti and nuetral sentiments based on the words in given tweet</p>
+
+							<div class="table-wrapper">
+										<table>
+											<thead>
+												<tr>
+													<th>Words</th>
+													<th>Sentiment</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>vaccin covid covidvaccin getvaccin pfizer fulli vaccineswork get effect peopl</td>
+													<td>Neutral</td>
+												</tr>
+												<tr>
+													<td>mybodymychoic freedom choic bodi right want mandat say abort peopl</td>
+													<td>Anti Vaccination</td>
+												</tr>
+												<tr>
+													
+													<td>getvaccin wearamask mask covid peopl children kid amp wear maskup</td>
+													<td>Pro Vaccination</td>
+												</tr>
+											</tbody>
+										</table>
+							</div>
+
+
+
+							<h4>LDA Clustering</h4>
+
+							<div class="inner">
+							<iframe src="py files3.html" width="980" height="800"> </iframe>
+							</div>
+
+							<p>Topics were divided into pro, anti and neutral sentiments based on the words in given tweet</p>
+
+							<div class="table-wrapper">
+										<table>
+											<thead>
+												<tr>
+													<th>Words</th>
+													<th>Sentiment</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>vaccin getvaccin covid amp peopl day year today like wearamask</td>
+													<td>Neutral</td>
+												</tr>
+												<tr>
+													<td>vaccin mybodymychoic covid peopl freedom right choic novaccin getvaccin mandat</td>
+													<td>Anti Vaccination</td>
+												</tr>
+												<tr>
+													
+													<td>getvaccin covid wearamask vaccin mask school kid children peopl maskup</td>
+													<td>Pro Vaccination</td>
+												</tr>
+											</tbody>
+										</table>
+							</div>
+
+
+							<h4>Bot Assessment</h4>
+							<p>I used <a href="https://github.com/mkearney/tweetbotornot">BotOrNot</a> package developed by Mkearney to to get a bot probability score for every user retweeting given tweet. This exercise was done on top 500 most popular tweets. Up to 100 user retweeting particular tweet were considered to calculate the bot score. At the end, this gave ratio of bots vs humans who liked the given tweet.</p>
+						
+						</section>
+						</div>
+
+					</section>
+				
+				<!-- Results and conclusion-->
+					<section id="two" class="wrapper style3-alt fade-up">
+						<div class="inner">
+							<h3>Validation</h3>
+							<span class="image fit"><img src="images/clusteringval1.jpeg" alt="" /></span>
+							<p>I randomly selected 100 tweets were classified into 3 categories - pro, anti and neutral sentiment. The manual scoring were compared with prediction from NMF and LDA. This is shown here. The neutral for NMF was more evenly split than that of LDA. NMF had higher accuracy and lower false positive rate than LDA. NMF was considered as choice of classification to determine the bot behavior.
+							</p>
+						</div>
+					
+						<div class="inner">
+							<h3>Bot Behavior</h3>
+							<span class="image fit"><img src="images/ttest.png" alt="" /></span>
+							<p>The null hypothesis could not be rejected with p-value being >0.05. The null hypothesis was both anti and pro sentiment tweets attract same level of bot engagement. This analysis could not find any evidence of bot targeting and spreading anti vaccination tweets over pro vaccination tweets.
+							</p>			
+						</div>
+					</section>
+
+					
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
